@@ -1,20 +1,39 @@
-import styles from './Timer.module.scss';
 import Button from '../Button/Button';
+import FormattedTime from '../FormatedTime/FormatedTime';
+import { useState, useEffect } from 'react';
 
 const Timer = () => {
-  const handleStart = (e) => {
-    console.log('start');
+  const [time, setTime] = useState(0);
+  const [timer, setTimer] = useState('');
+
+  const start = () => {
+    setTime(0);
+    setTimer(
+      setInterval(() => {
+        setTime((prevValue) => prevValue + 1);
+      }, 1)
+    );
   };
-  const handleStop = (e) => {
-    console.log('stop');
+
+  useEffect(() => {
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [timer]);
+
+  const handleStart = () => {
+    start();
   };
-  const handleReset = (e) => {
-    console.log('reset');
+  const handleStop = () => {
+    clearInterval(timer);
+  };
+  const handleReset = () => {
+    setTime(0);
   };
 
   return (
     <div>
-      <div className={styles.timer}>00:00:00.000</div>
+      <FormattedTime time={time} />
       <Button action={handleStart}>Start</Button>
       <Button action={handleStop}>Stop</Button>
       <Button action={handleReset}>Reset</Button>
