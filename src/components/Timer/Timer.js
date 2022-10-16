@@ -7,7 +7,6 @@ const Timer = () => {
   const [timer, setTimer] = useState('');
 
   const start = () => {
-    setTime(0);
     setTimer(
       setInterval(() => {
         setTime((prevValue) => prevValue + 1);
